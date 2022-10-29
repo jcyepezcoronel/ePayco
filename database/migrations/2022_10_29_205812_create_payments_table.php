@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('documento', 64)->unique();
-            $table->string('nombres', 100);
-            $table->string('mail', 64);
+            $table->float('amount');
+            $table->string('status', 50);
+            $table->string('token', 6)->unique();
+            $table->foreignId('customer_id')->constrained('customers');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('payments');
     }
 };
